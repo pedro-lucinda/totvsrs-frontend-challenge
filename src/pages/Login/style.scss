@@ -1,0 +1,84 @@
+@use "../../scss/base.scss";
+
+.c_login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  img {
+    height: 4rem;
+  }
+
+  img,
+  h1 {
+    margin-bottom: 5vh;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    label {
+      font-family: "Archivo Black", sans-serif;
+      font-size: 2rem;
+      line-height: 2.2rem;
+
+      margin: 0.5vw 0;
+    }
+
+    input {
+      background: base.$light-grey;
+      border: 1px solid base.$dark-grey;
+      box-sizing: border-box;
+      border-radius: 1rem;
+
+      width: 35rem;
+      height: 5rem;
+      padding: 1vw;
+
+      font-family: "Lexend Mega", sans-serif;
+      font-size: 1.6rem;
+      line-height: 1.7rem;
+    }
+
+    button {
+      min-width: 12.5rem;
+      height: 4rem;
+      margin: 1vw 0;
+
+      position: relative;
+      left: 11.25rem;
+
+      background: base.$green;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: none;
+
+      font-family: "Archivo Black", sans-serif;
+      font-weight: normal;
+      font-size: 2rem;
+      line-height: 2.2rem;
+
+      &:hover {
+        cursor: pointer;
+        background: base.$orange;
+        transition: background ease-in 0.2;
+      }
+    }
+
+    h3 {
+      position: relative;
+      left: 9rem;
+
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+}
