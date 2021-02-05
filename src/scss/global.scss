@@ -1,0 +1,40 @@
+@use 'base';
+
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+:root {
+	font-size: 10px;
+	color: base.$black;
+	background: base.$light-grey;
+
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+h1 {
+	font-size: 5.5rem;
+	line-height: 6rem;
+	font-family: "Archivo Black", sans-serif;
+}
+
+h2 {
+	font-family: "Archivo Black", sans-serif;
+	font-size: 3.6rem;
+	line-height: 3.9rem;
+}
+
+h3 {
+	font-family: "Archivo Black", sans-serif;
+	font-size: 2rem;
+	line-height: 2.2rem;
+}
+
+p {
+	font-family: "Lexend Mega", sans-serif;
+	font-size: 1.6rem;
+	line-height: 2rem;
+}
