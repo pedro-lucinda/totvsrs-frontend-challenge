@@ -33,10 +33,8 @@ const Login = () => {
       (user) => user.email === email && user.password === password
     );
 
-    console.log("isRegistered", isRegistered);
-
     if (isRegistered.length > 0) {
-      history.push("/home");
+      history.push(`/home/${isRegistered[0].id}`);
     } else {
       alert("User not registered, please signup.");
     }

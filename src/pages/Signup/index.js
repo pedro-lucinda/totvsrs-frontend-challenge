@@ -6,7 +6,7 @@ import { useForm } from "../../hooks/useForm";
 //router
 import { NavLink, useHistory } from "react-router-dom";
 //uuid
-import { uuid } from 'uuidv4';
+import { uuid } from "uuidv4";
 
 const Signup = () => {
   const history = useHistory();
@@ -36,16 +36,14 @@ const Signup = () => {
       password: form.password,
     };
 
-
     const newUserEmail = form.email;
     const notAvalible = users?.filter((user) => user.email === newUserEmail);
-   
 
     if (notAvalible.length > 0) {
       return alert("This email is already register, try loggin instead.");
     } else {
       localStorage.setItem("users", JSON.stringify([...users, newUser]));
-      return history.push("/home");
+      return history.push(`/home/${newUser.id}`);
     }
   }
 

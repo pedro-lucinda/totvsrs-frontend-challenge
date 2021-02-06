@@ -1,0 +1,31 @@
+import React, { useState } from "react";
+import CreateToDoForm from "../../components/CreateToDoForm";
+import { useForm } from "../../hooks/useForm";
+
+const Home = () => {
+  const [select, setSelect] = useState("backlog");
+  const [form, onChangeInput] = useForm({
+    title: "",
+    description: "",
+  });
+
+  function handleCreateToDo(e) {
+    e.preventDefault();
+    console.log(form.title, form.description, select);
+  }
+
+  return (
+    <div>
+      <CreateToDoForm
+        onSubmit={handleCreateToDo}
+        title={form.title}
+        description={form.description}
+        onChange={onChangeInput}
+        select={select}
+        onChangeSelect={(e) => setSelect(e.target.value)}
+      />
+    </div>
+  );
+};
+
+export default Home;

@@ -38,3 +38,23 @@ p {
 	font-size: 1.6rem;
 	line-height: 2rem;
 }
+button {
+	min-width: 12.5rem;
+	height: 4rem;
+
+	background: base.$green;
+	border: none;
+	border-radius: 1rem;
+	box-shadow: none;
+
+	font-family: "Archivo Black", sans-serif;
+	font-weight: normal;
+	font-size: 2rem;
+	line-height: 2.2rem;
+
+	&:hover {
+		cursor: pointer;
+		background: base.$orange;
+		transition: background ease-in 0.2;
+	}
+}
