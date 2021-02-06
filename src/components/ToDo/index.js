@@ -8,7 +8,7 @@ const ToDo = (props) => {
       <main>
         <section>
           <h3> {props.title} </h3>
-          <div>
+          <div style={{ background: props.bgColor }}>
             <h3>{props.status}</h3>
           </div>
         </section>

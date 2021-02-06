@@ -23,7 +23,6 @@ const Home = () => {
     }
   });
 
-
   function handleCreateToDo(e) {
     e.preventDefault();
 
@@ -34,6 +33,9 @@ const Home = () => {
       toDo: form.description,
       status: select,
     };
+
+    form.title = "";
+    form.description = "";
 
     localStorage.setItem("todos", JSON.stringify([...todos, newTodo]));
     setTodos([...todos, newTodo]);
@@ -59,6 +61,11 @@ const Home = () => {
             title={todo.title}
             todo={todo.toDo}
             status={todo.status}
+            bgColor={
+              (todo.status === "done" && "#9DF247") ||
+              (todo.status === "doing" && "#F2A447") ||
+              (todo.status === "backlog" && "#979797")
+            }
           />
         ))}
       </main>
