@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CreateToDoForm from "../../components/CreateToDoForm";
 import Navbar from "../../components/Navbar";
 import { useForm } from "../../hooks/useForm";
 import { v4 as uuid_v4 } from "uuid";
 import ToDo from "../../components/ToDo";
+import "./style.scss";
 
 const Home = () => {
   const [select, setSelect] = useState("backlog");
@@ -14,14 +15,20 @@ const Home = () => {
     description: "",
   });
 
-  const [todos, setTodos] = useState(() => {
-    const todosInLocalStorage = localStorage.getItem("todos");
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const todosInLocalStorage = JSON.parse(localStorage.getItem("todos"));
+
     if (todosInLocalStorage) {
-      return JSON.parse(todosInLocalStorage);
+      const userTodos = todosInLocalStorage.filter(
+        (todo) => todo.userid === userId
+      );
+      return setTodos(userTodos);
     } else {
-      return [];
+      return setTodos([]);
     }
-  });
+  }, [userId]);
 
   function handleCreateToDo(e) {
     e.preventDefault();
@@ -43,7 +50,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="c_home">
       <Navbar />
       <CreateToDoForm
         onSubmit={handleCreateToDo}
@@ -54,7 +61,8 @@ const Home = () => {
         onChangeSelect={(e) => setSelect(e.target.value)}
       />
 
-      <main>
+      <main className="c_todosHome">
+        <h2> To Do List </h2>
         {todos?.map((todo) => (
           <ToDo
             key={uuid_v4()}

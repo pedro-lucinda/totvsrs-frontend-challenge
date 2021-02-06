@@ -1,7 +1,7 @@
 @use "../../scss/base.scss";
 
 .c_createToDo {
-  margin: auto;
+  margin:  auto;
   max-width: 70rem;
   margin-top: 2rem;
 
@@ -54,12 +54,12 @@
       height: 5rem;
     }
 
-		div{
-			width: 60rem;
+    div {
+      width: 60rem;
 
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 }
