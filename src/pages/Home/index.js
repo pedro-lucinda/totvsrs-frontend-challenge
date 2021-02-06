@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CreateToDoForm from "../../components/CreateToDoForm";
+import Navbar from "../../components/Navbar";
 import { useForm } from "../../hooks/useForm";
 
 const Home = () => {
@@ -15,7 +16,8 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div >
+      <Navbar />
       <CreateToDoForm
         onSubmit={handleCreateToDo}
         title={form.title}

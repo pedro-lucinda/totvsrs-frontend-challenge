@@ -1,0 +1,23 @@
+@use '../../scss/base.scss';
+
+.c_navbar {
+  width: 100vw;
+
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 119.9rem;
+    min-width: 32rem;
+    height: 10rem;
+    margin: auto;
+
+    padding: 0 0.5rem;
+
+    background: transparent;
+    img {
+      height: 4rem;
+    }
+  }
+}
