@@ -12,7 +12,7 @@ const Home = () => {
 
   function handleCreateToDo(e) {
     e.preventDefault();
-    console.log(form.title, form.description, select);
+    
   }
 
   return (
