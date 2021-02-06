@@ -19,5 +19,13 @@
     img {
       height: 4rem;
     }
+
+    h3 {
+      &:hover {
+        cursor: pointer;
+        color: base.$orange;
+        transition: color ease-in 0.2s;
+      }
+    }
   }
 }
