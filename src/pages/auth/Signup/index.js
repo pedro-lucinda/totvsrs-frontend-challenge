@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import logo from "../../assets/logo/logo-totvs-rs.png";
-import "./style.scss";
+import logo from "../../../assets/logo/logo-totvs-rs.png";
+import "../style.scss";
 //hook
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../hooks/useForm";
 //router
 import { NavLink, useHistory } from "react-router-dom";
 //uuid
@@ -48,7 +48,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="c_signup">
+    <div className="c_loginSignup">
       <img src={logo} alt="totvsrs" />
       <h1> Signup </h1>
       <form onSubmit={handleSignup}>
