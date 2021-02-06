@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
 const Modal = (props) => {
-  const { userId } = useParams();
-  const [modalInfo, setModalInfo] = useState(props.modalInfo);
-  const [todos, setTodos] = useState(props.todos);
-  console.log(todos);
+  const [modalInfo] = useState(props.modalInfo);
+  const [todos] = useState(props.todos);
 
   const [form, onChangeInput] = useForm({
     title: modalInfo.title,
@@ -23,8 +20,6 @@ const Modal = (props) => {
       todo: form.todo,
       select: form.select,
     };
-
-
   }
 
   return (

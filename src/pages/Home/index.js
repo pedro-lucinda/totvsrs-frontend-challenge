@@ -11,6 +11,9 @@ import Modal from "../../components/Modal";
 const Home = () => {
   const { userId } = useParams();
   const [todos, setTodos] = useState([]);
+  const [localStorageTodos] = useState(
+    JSON.parse(localStorage.getItem("todos"))
+  );
   const [select, setSelect] = useState("backlog");
   //modal
   const [openModal, setOpenModal] = useState(false);
@@ -24,14 +27,13 @@ const Home = () => {
 
   // get users to dos
   useEffect(() => {
-    const todosInLocalStorage = JSON.parse(localStorage.getItem("todos"));
-    if (todosInLocalStorage) {
-      const userTodos = todosInLocalStorage.filter(
+    if (localStorageTodos) {
+      const userTodos = localStorageTodos.filter(
         (todo) => todo.userid === userId
       );
       return setTodos(userTodos);
     }
-  }, [userId]);
+  }, [userId, localStorageTodos]);
 
   //create to do
   function handleCreateToDo(e) {
@@ -48,7 +50,10 @@ const Home = () => {
     form.title = "";
     form.description = "";
 
-    localStorage.setItem("todos", JSON.stringify([...todos, newTodo]));
+    localStorage.setItem(
+      "todos",
+      JSON.stringify([...localStorageTodos, newTodo])
+    );
     setTodos([...todos, newTodo]);
     return alert("To Do Created!");
   }
@@ -57,7 +62,7 @@ const Home = () => {
   function handleOpenModal(id) {
     const modalInfo = todos.filter((todo) => todo.id === id);
     setTodoModalInfo(modalInfo[0]);
-    setOpenModal(true);
+    return setOpenModal(true);
   }
 
   //delete to do and close modal

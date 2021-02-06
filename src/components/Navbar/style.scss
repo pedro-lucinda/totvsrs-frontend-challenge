@@ -2,6 +2,7 @@
 
 .c_navbar {
   width: 100vw;
+  padding: 0 2rem;
 
   main {
     display: flex;
@@ -25,6 +26,14 @@
         cursor: pointer;
         color: base.$orange;
         transition: color ease-in 0.2s;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 630px) {
+    main {
+      img {
+        height: 3rem;
       }
     }
   }
