@@ -19,7 +19,7 @@
     align-items: left;
     justify-content: flex-start;
 
-    max-width: 44rem;
+    width: 54rem;
 
     section {
       display: flex;
@@ -46,6 +46,9 @@
           line-height: 1.6rem;
         }
       }
+    }
+    p {
+      max-width: 44rem;
     }
   }
 
