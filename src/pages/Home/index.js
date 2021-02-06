@@ -6,30 +6,34 @@ import { useForm } from "../../hooks/useForm";
 import { v4 as uuid_v4 } from "uuid";
 import ToDo from "../../components/ToDo";
 import "./style.scss";
+import Modal from "../../components/Modal";
 
 const Home = () => {
-  const [select, setSelect] = useState("backlog");
   const { userId } = useParams();
+  const [todos, setTodos] = useState([]);
+  const [select, setSelect] = useState("backlog");
+  //modal
+  const [openModal, setOpenModal] = useState(false);
+  const [todoModalInfo, setTodoModalInfo] = useState([]);
+
+  //forms
   const [form, onChangeInput] = useForm({
     title: "",
     description: "",
   });
 
-  const [todos, setTodos] = useState([]);
-
+  // get users to dos
   useEffect(() => {
     const todosInLocalStorage = JSON.parse(localStorage.getItem("todos"));
-
     if (todosInLocalStorage) {
       const userTodos = todosInLocalStorage.filter(
         (todo) => todo.userid === userId
       );
       return setTodos(userTodos);
-    } else {
-      return setTodos([]);
     }
   }, [userId]);
 
+  //create to do
   function handleCreateToDo(e) {
     e.preventDefault();
 
@@ -49,6 +53,22 @@ const Home = () => {
     return alert("To Do Created!");
   }
 
+  //open modal
+  function handleOpenModal(id) {
+    const modalInfo = todos.filter((todo) => todo.id === id);
+    setTodoModalInfo(modalInfo[0]);
+    setOpenModal(true);
+  }
+
+  //delete to do and close modal
+  function handleDeleteTodo(id) {
+    const newTodoList = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodoList);
+    localStorage.setItem("todos", JSON.stringify(newTodoList));
+    alert("Deleted");
+    return setOpenModal(false);
+  }
+
   return (
     <div className="c_home">
       <Navbar />
@@ -60,6 +80,14 @@ const Home = () => {
         select={select}
         onChangeSelect={(e) => setSelect(e.target.value)}
       />
+      {openModal && (
+        <Modal
+          todos={todos}
+          modalInfo={todoModalInfo}
+          delete={() => handleDeleteTodo(todoModalInfo.id)}
+          cancel={() => setOpenModal(false)}
+        />
+      )}
 
       <main className="c_todosHome">
         <h2> To Do List </h2>
@@ -74,6 +102,7 @@ const Home = () => {
               (todo.status === "doing" && "#F2A447") ||
               (todo.status === "backlog" && "#979797")
             }
+            onClick={() => handleOpenModal(todo.id)}
           />
         ))}
       </main>
