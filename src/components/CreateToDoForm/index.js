@@ -12,6 +12,7 @@ const CreateToDoForm = (props) => {
           value={props.title}
           onChange={props.onChange}
           type="text"
+          maxLength="30"
           required
         />
         <textarea
@@ -20,7 +21,7 @@ const CreateToDoForm = (props) => {
           value={props.description}
           onChange={props.onChange}
           type="text"
-          maxlength="30"
+          maxLength="60"
           required
         />
 

@@ -6,7 +6,7 @@ import { useForm } from "../../../hooks/useForm";
 //router
 import { NavLink, useHistory } from "react-router-dom";
 //uuid
-import { uuid } from "uuidv4";
+import { v4 as uuid_v4 } from "uuid";
 
 const Signup = () => {
   const history = useHistory();
@@ -30,7 +30,7 @@ const Signup = () => {
     e.preventDefault();
 
     const newUser = {
-      id: uuid(),
+      id: uuid_v4(),
       name: form.name,
       email: form.email,
       password: form.password,
