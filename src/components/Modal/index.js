@@ -8,7 +8,7 @@ const Modal = (props) => {
   const [modalInfo] = useState(props.modalInfo);
   const { localStorageTodos } = useContext(LSTodosContext);
   const { todos, setTodos } = useContext(TodosContext);
-  const [select, setSelect] = useState("backlog");
+  const [select, setSelect] = useState(modalInfo.status || "backlog");
   const [form, onChangeInput] = useForm({
     title: modalInfo.title,
     todo: modalInfo.toDo,
@@ -42,7 +42,7 @@ const Modal = (props) => {
 
   return (
     <div className="c_modal">
-      <h2> Edit to do </h2>
+      <h2> Edit </h2>
       <main>
         <section>
           <input

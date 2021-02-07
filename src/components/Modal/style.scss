@@ -3,7 +3,7 @@
 .c_modal {
   width: 66rem;
   height: 44rem;
-  background: white;
+  background: base.$light-grey;
   padding: 2rem;
 
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
@@ -11,6 +11,7 @@
   border-radius: 1rem;
 
   position: fixed;
+  z-index: 1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -62,6 +63,11 @@
     border: 1px solid base.$dark-grey;
     border-radius: 1rem;
     padding: 1rem;
+  }
+  input,
+  textarea,
+  select {
+    background: transparent;
   }
 
   textarea {

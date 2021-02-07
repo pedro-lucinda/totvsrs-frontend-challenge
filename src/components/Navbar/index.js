@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import logo from "../../assets/logo/logo-totvs-rs.png";
+import { UserSessionContext } from "../../context/userSessionContext";
 import "./style.scss";
 
 const Navbar = () => {
+  const {setUserSession} = useContext(UserSessionContext);
   const history = useHistory();
 
   function handleSignOut() {
+    setUserSession(false)
     return history.push("/");
   }
 

@@ -1,20 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import CreateToDoForm from "../../components/CreateToDoForm";
 import Navbar from "../../components/Navbar";
 import ToDo from "../../components/ToDo";
 import Modal from "../../components/Modal";
 import "./style.scss";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { v4 as uuid_v4 } from "uuid";
 import { TodosContext } from "../../context/todosContext";
 import { LSTodosContext } from "../../context/localStorageTodos";
+import { UserSessionContext } from "../../context/userSessionContext";
+import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const { userId } = useParams();
+  const history = useHistory();
+  const { userSession } = useContext(UserSessionContext);
   const { todos, setTodos } = useContext(TodosContext);
   const { localStorageTodos } = useContext(LSTodosContext);
-
   const [select, setSelect] = useState("backlog");
   //modal
   const [openModal, setOpenModal] = useState(false);
@@ -26,6 +31,25 @@ const Home = () => {
     description: "",
   });
 
+  //verification if the user is logged in
+  useEffect(() => {
+    if (!userSession) {
+      Swal.fire({
+        icon: "error",
+        title: "You need to login first",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "p_swal",
+          title: "h_swal",
+          header: "h_swal",
+          content: "h_swal",
+        },
+      });
+      return history.push("/");
+    }
+  }, [userSession, userId]);
+
   //get all to dos
   useEffect(() => {
     const localStorageTodos = JSON.parse(localStorage.getItem("todos"));
@@ -35,7 +59,7 @@ const Home = () => {
       );
       return setTodos(userTodos);
     }
-  }, [userId, setTodos]);
+  }, [userId]);
 
   //create to do
   function handleCreateToDo(e) {
@@ -47,17 +71,62 @@ const Home = () => {
       title: form.title,
       toDo: form.description,
       status: select,
+      date: Date.now(),
     };
-
-    form.title = "";
-    form.description = "";
 
     localStorage.setItem(
       "todos",
       JSON.stringify([...localStorageTodos, newTodo])
     );
     setTodos([...todos, newTodo]);
-    return alert("To Do Created!");
+
+    form.title = "";
+    form.description = "";
+
+    return Swal.fire({
+      icon: "success",
+      title: "To do Created",
+      showConfirmButton: false,
+      timer: 1500,
+      customClass: {
+        popup: "p_swal",
+        title: "h_swal",
+        header: "h_swal",
+        content: "h_swal",
+      },
+    });
+  }
+
+  //delete to do and close modal
+  function handleDeleteTodo(id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      customClass: {
+        popup: "p_swal-deletePopUp",
+        title: "h_swal",
+        header: "h_swal",
+        closeButton: "b_swal",
+        content: "h_swal",
+        validationMessage: "h_swal",
+        confirmButton: "b_swal",
+        denyButton: "b_swal-cancel",
+        cancelButton: "b_swal-cancel",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newTodoList = todos.filter((todo) => todo.id !== id);
+        const newStorageTodoList = localStorageTodos.filter(
+          (todo) => todo.id !== id
+        );
+        setTodos(newTodoList);
+        localStorage.setItem("todos", JSON.stringify(newStorageTodoList));
+
+        return setOpenModal(false);
+      }
+    });
   }
 
   //open modal
@@ -65,18 +134,6 @@ const Home = () => {
     const modalInfo = todos.filter((todo) => todo.id === id);
     setTodoModalInfo(modalInfo[0]);
     return setOpenModal(true);
-  }
-
-  //delete to do and close modal
-  function handleDeleteTodo(id) {
-    const newTodoList = todos.filter((todo) => todo.id !== id);
-    const newStorageTodoList = localStorageTodos.filter(
-      (todo) => todo.id !== id
-    );
-    setTodos(newTodoList);
-    localStorage.setItem("todos", JSON.stringify(newStorageTodoList));
-    alert("Deleted");
-    return setOpenModal(false);
   }
 
   return (
@@ -104,7 +161,7 @@ const Home = () => {
         />
       )}
 
-      <main className="c_todosHome">
+      <main className="c_todosHome  animateUp">
         <h2> To Do List </h2>
         {todos?.map((todo) => (
           <ToDo
@@ -120,6 +177,7 @@ const Home = () => {
             onClick={() => handleOpenModal(todo.id)}
           />
         ))}
+        {todos.length < 1 && <p> Your to do list will appear here! </p>}
       </main>
     </div>
   );

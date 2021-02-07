@@ -3,7 +3,7 @@ import "./style.scss";
 
 const CreateToDoForm = (props) => {
   return (
-    <div className="c_createToDo">
+    <div className="c_createToDo  animateUp">
       <h2> Create a To Do </h2>
       <form onSubmit={props.onSubmit}>
         <input

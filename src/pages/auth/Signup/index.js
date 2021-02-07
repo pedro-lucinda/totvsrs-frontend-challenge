@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../../assets/logo/logo-totvs-rs.png";
 import "../style.scss";
 //hook
@@ -7,8 +7,13 @@ import { useForm } from "../../../hooks/useForm";
 import { NavLink, useHistory } from "react-router-dom";
 //uuid
 import { v4 as uuid_v4 } from "uuid";
+//context
+import { UserSessionContext } from "../../../context/userSessionContext";
+//alert
+import Swal from "sweetalert2";
 
 const Signup = () => {
+  const { setUserSession } = useContext(UserSessionContext);
   const history = useHistory();
   const [users] = useState(() => {
     const usersInLocalStorage = localStorage.getItem("users");
@@ -34,21 +39,34 @@ const Signup = () => {
       name: form.name,
       email: form.email,
       password: form.password,
+      auth: true,
     };
 
     const newUserEmail = form.email;
     const notAvalible = users?.filter((user) => user.email === newUserEmail);
 
     if (notAvalible.length > 0) {
-      return alert("This email is already register, try loggin instead.");
+      return Swal.fire({
+        icon: "error",
+        title: "This email is taken.",
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          popup: "p_swal",
+          title: "h_swal",
+          header: "h_swal",
+          content: "h_swal",
+        },
+      });
     } else {
+      setUserSession(true);
       localStorage.setItem("users", JSON.stringify([...users, newUser]));
       return history.push(`/home/${newUser.id}`);
     }
   }
 
   return (
-    <div className="c_loginSignup">
+    <div className="c_loginSignup animateUp">
       <img src={logo} alt="totvsrs" />
       <h1> Signup </h1>
       <form onSubmit={handleSignup}>
@@ -59,6 +77,7 @@ const Signup = () => {
           name={"name"}
           placeholder="name"
           type="text"
+          pattern={".{3,}"}
           required
         />
 
@@ -79,6 +98,7 @@ const Signup = () => {
           name={"password"}
           placeholder="password"
           type="password"
+          pattern={".{6,}"}
           required
         />
 

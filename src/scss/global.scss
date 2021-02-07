@@ -64,4 +64,69 @@ button,
 textarea,
 select {
   outline: none;
+  &:hover {
+    box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+select {
+  padding: 0.5rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+//animations
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animateUp {
+  animation-name: up;
+  animation-duration: 1000ms;
+  animation-fill-mode: backwards;
+}
+
+//alert
+.p_swal {
+  background: base.$light-grey !important;
+
+  max-width: 40rem !important;
+  min-width: 30rem !important;
+}
+
+.p_swal-deletePopUp {
+  background: base.$light-grey !important;
+  width: 30rem !important;
+}
+
+.h_swal {
+  font-family: "Lexend Mega", sans-serif;
+  font-weight: bold !important;
+  color: black !important;
+}
+
+.b_swal,
+.b_swal-cancel {
+  color: base.$black !important;
+  border-radius: 1rem;
+
+  outline: none;
+
+  min-width: 8rem !important;
+}
+
+.b_swal {
+  background-color: base.$orange !important ;
+}
+
+.b_swal-cancel {
+  background-color: base.$dark-grey !important;
 }

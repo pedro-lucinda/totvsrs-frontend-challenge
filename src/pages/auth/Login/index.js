@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../../assets/logo/logo-totvs-rs.png";
 import "../style.scss";
 //hook
 import { useForm } from "../../../hooks/useForm";
 //router
 import { NavLink, useHistory } from "react-router-dom";
+//context
+import { UserSessionContext } from "../../../context/userSessionContext";
+//alert
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { setUserSession } = useContext(UserSessionContext);
   const [users] = useState(() => {
     const usersInLocalStorage = localStorage.getItem("users");
     if (usersInLocalStorage) {
@@ -34,14 +39,26 @@ const Login = () => {
     );
 
     if (isRegistered.length > 0) {
-      history.push(`/home/${isRegistered[0].id}`);
+      setUserSession(true);
+      return history.push(`/home/${isRegistered[0].id}`);
     } else {
-      alert("User not registered, please signup.");
+      Swal.fire({
+        icon: "error",
+        title: "Email not found.",
+        showConfirmButton: false,
+        timer: 1200,
+        customClass: {
+          popup: "p_swal",
+          title: "h_swal",
+          header: "h_swal",
+          content: "h_swal",
+        },
+      });
     }
   }
 
   return (
-    <div className="c_loginSignup">
+    <div className="c_loginSignup animateUp">
       <img src={logo} alt="totvsrs" />
       <h1> Login </h1>
       <form onSubmit={handleLogin}>

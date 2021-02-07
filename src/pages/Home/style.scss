@@ -2,10 +2,16 @@
 
 .c_home {
   width: 100vw;
+  height: 100%;
+
+  @media only screen and (max-width: 1050px) {
+    height: 100vh;
+  }
 }
 
 .c_todosHome {
   margin: 5rem auto;
+  min-height: 30rem;
   max-width: 119.9rem;
 
   display: flex;

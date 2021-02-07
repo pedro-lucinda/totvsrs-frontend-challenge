@@ -4,16 +4,19 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes/Routes";
 import { TodosContextProvider } from "./context/todosContext";
 import { LSTodosContextProvider } from "./context/localStorageTodos";
+import { UserSessionContextProvider } from "./context/userSessionContext";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <LSTodosContextProvider>
-          <TodosContextProvider>
-            <Routes />
-          </TodosContextProvider>
-        </LSTodosContextProvider>
+        <UserSessionContextProvider>
+          <LSTodosContextProvider>
+            <TodosContextProvider>
+              <Routes />
+            </TodosContextProvider>
+          </LSTodosContextProvider>
+        </UserSessionContextProvider>
       </BrowserRouter>
     </>
   );
