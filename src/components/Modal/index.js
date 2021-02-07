@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { LSTodosContext } from "../../context/localStorageTodos";
+import { TodosContext } from "../../context/todosContext";
 import { useForm } from "../../hooks/useForm";
 import "./style.scss";
 
 const Modal = (props) => {
   const [modalInfo] = useState(props.modalInfo);
-  const [todos] = useState(props.todos);
-
+  const { localStorageTodos } = useContext(LSTodosContext);
+  const { todos, setTodos } = useContext(TodosContext);
+  const [select, setSelect] = useState("backlog");
   const [form, onChangeInput] = useForm({
     title: modalInfo.title,
     todo: modalInfo.toDo,
-    select: modalInfo.status,
+    status: modalInfo.status,
   });
 
   //change to do or do nothing
@@ -17,19 +20,24 @@ const Modal = (props) => {
     const editedTodo = {
       id: modalInfo.id,
       userid: modalInfo.userid,
-      title: form.title,
-      todo: form.todo,
-      select: form.select,
+      title: form.title || modalInfo.title,
+      toDo: form.todo || modalInfo.toDo,
+      status: select || modalInfo.status,
     };
+
+    const withoutOldTodoInLS = localStorageTodos.filter(
+      (todo) => todo.id !== modalInfo.id
+    );
 
     const withoutOldTodo = todos.filter((todo) => todo.id !== modalInfo.id);
 
     localStorage.setItem(
       "todos",
-      JSON.stringify([...withoutOldTodo, editedTodo])
+      JSON.stringify([...withoutOldTodoInLS, editedTodo])
     );
 
-    return console.log("edited");
+    setTodos([...withoutOldTodo, editedTodo]);
+    return props.setOpenModal(false);
   }
 
   return (
@@ -44,7 +52,7 @@ const Modal = (props) => {
             type="text"
             maxLength="35"
           />
-          <select value={form.select} onChange={onChangeInput}>
+          <select value={select} onChange={(e) => setSelect(e.target.value)}>
             <option value="backlog" name="backlog">
               backlog
             </option>

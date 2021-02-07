@@ -10,7 +10,7 @@ import { v4 as uuid_v4 } from "uuid";
 
 const Signup = () => {
   const history = useHistory();
-  const [users, setUsers] = useState(() => {
+  const [users] = useState(() => {
     const usersInLocalStorage = localStorage.getItem("users");
     if (usersInLocalStorage) {
       return JSON.parse(usersInLocalStorage);

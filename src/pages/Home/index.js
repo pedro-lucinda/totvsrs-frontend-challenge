@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import CreateToDoForm from "../../components/CreateToDoForm";
 import Navbar from "../../components/Navbar";
+import ToDo from "../../components/ToDo";
+import Modal from "../../components/Modal";
+import "./style.scss";
+import { useParams } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { v4 as uuid_v4 } from "uuid";
-import ToDo from "../../components/ToDo";
-import "./style.scss";
-import Modal from "../../components/Modal";
+import { TodosContext } from "../../context/todosContext";
+import { LSTodosContext } from "../../context/localStorageTodos";
 
 const Home = () => {
   const { userId } = useParams();
-  const [todos, setTodos] = useState([]);
-  const [localStorageTodos] = useState(
-    JSON.parse(localStorage.getItem("todos"))
-  );
+  const { todos, setTodos } = useContext(TodosContext);
+  const { localStorageTodos } = useContext(LSTodosContext);
+
   const [select, setSelect] = useState("backlog");
   //modal
   const [openModal, setOpenModal] = useState(false);
@@ -25,15 +26,16 @@ const Home = () => {
     description: "",
   });
 
-  // get users to dos
+  //get all to dos
   useEffect(() => {
+    const localStorageTodos = JSON.parse(localStorage.getItem("todos"));
     if (localStorageTodos) {
       const userTodos = localStorageTodos.filter(
         (todo) => todo.userid === userId
       );
       return setTodos(userTodos);
     }
-  }, [userId, localStorageTodos]);
+  }, [userId, setTodos]);
 
   //create to do
   function handleCreateToDo(e) {
@@ -76,9 +78,7 @@ const Home = () => {
     alert("Deleted");
     return setOpenModal(false);
   }
-  console.log("todos", todos);
-  console.log("localStorageTodos", localStorageTodos);
-  
+
   return (
     <div
       className="c_home"
@@ -97,8 +97,8 @@ const Home = () => {
       />
       {openModal && (
         <Modal
-          todos={localStorageTodos}
           modalInfo={todoModalInfo}
+          setOpenModal={setOpenModal}
           delete={() => handleDeleteTodo(todoModalInfo.id)}
           cancel={() => setOpenModal(false)}
         />

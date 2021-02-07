@@ -7,7 +7,7 @@ import { useForm } from "../../../hooks/useForm";
 import { NavLink, useHistory } from "react-router-dom";
 
 const Login = () => {
-  const [users, setUsers] = useState(() => {
+  const [users] = useState(() => {
     const usersInLocalStorage = localStorage.getItem("users");
     if (usersInLocalStorage) {
       return JSON.parse(usersInLocalStorage);
