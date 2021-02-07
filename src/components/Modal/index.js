@@ -15,10 +15,21 @@ const Modal = (props) => {
   //change to do or do nothing
   function handleChangeTodo() {
     const editedTodo = {
+      id: modalInfo.id,
+      userid: modalInfo.userid,
       title: form.title,
       todo: form.todo,
       select: form.select,
     };
+
+    const withoutOldTodo = todos.filter((todo) => todo.id !== modalInfo.id);
+
+    localStorage.setItem(
+      "todos",
+      JSON.stringify([...withoutOldTodo, editedTodo])
+    );
+
+    return console.log("edited");
   }
 
   return (
@@ -58,8 +69,7 @@ const Modal = (props) => {
             Delete
           </button>
           <button onClick={props.cancel} style={{ backgroundColor: "#F2A447" }}>
-            {" "}
-            Cancel{" "}
+            Cancel
           </button>
         </section>
       </main>

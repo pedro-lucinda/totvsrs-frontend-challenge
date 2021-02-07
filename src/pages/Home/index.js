@@ -68,14 +68,17 @@ const Home = () => {
   //delete to do and close modal
   function handleDeleteTodo(id) {
     const newTodoList = todos.filter((todo) => todo.id !== id);
+    const newStorageTodoList = localStorageTodos.filter(
+      (todo) => todo.id !== id
+    );
     setTodos(newTodoList);
-    localStorage.setItem("todos", JSON.stringify(newTodoList));
+    localStorage.setItem("todos", JSON.stringify(newStorageTodoList));
     alert("Deleted");
     return setOpenModal(false);
   }
-
-  console.log(openModal);
-
+  console.log("todos", todos);
+  console.log("localStorageTodos", localStorageTodos);
+  
   return (
     <div
       className="c_home"
@@ -94,7 +97,7 @@ const Home = () => {
       />
       {openModal && (
         <Modal
-          todos={todos}
+          todos={localStorageTodos}
           modalInfo={todoModalInfo}
           delete={() => handleDeleteTodo(todoModalInfo.id)}
           cancel={() => setOpenModal(false)}
