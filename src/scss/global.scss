@@ -94,7 +94,7 @@ select {
   animation-fill-mode: backwards;
 }
 
-//alert
+//alert -- needs !important in order to work
 .p_swal {
   background: base.$light-grey !important;
 

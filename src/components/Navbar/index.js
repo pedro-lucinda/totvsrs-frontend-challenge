@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import logo from "../../assets/logo/logo-totvs-rs.png";
 import { UserSessionContext } from "../../context/userSessionContext";
+import logo from "../../assets/logo/logo-totvs-rs.png";
 import "./style.scss";
 
 const Navbar = () => {

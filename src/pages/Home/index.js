@@ -1,18 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
+//components + styles
 import CreateToDoForm from "../../components/CreateToDoForm";
 import Navbar from "../../components/Navbar";
 import ToDo from "../../components/ToDo";
 import Modal from "../../components/Modal";
+import Swal from "sweetalert2";
 import "./style.scss";
+//route
 import { useHistory, useParams } from "react-router-dom";
+//hooks
 import { useForm } from "../../hooks/useForm";
+//id
 import { v4 as uuid_v4 } from "uuid";
+//context
 import { TodosContext } from "../../context/todosContext";
 import { LSTodosContext } from "../../context/localStorageTodos";
 import { UserSessionContext } from "../../context/userSessionContext";
-import swal from "sweetalert";
-import Swal from "sweetalert2";
 
 const Home = () => {
   const { userId } = useParams();
