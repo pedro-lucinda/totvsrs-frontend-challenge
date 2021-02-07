@@ -74,8 +74,15 @@ const Home = () => {
     return setOpenModal(false);
   }
 
+  console.log(openModal);
+
   return (
-    <div className="c_home">
+    <div
+      className="c_home"
+      style={{
+        backgroundColor: `${openModal ? "rgba(0, 0, 0, 0.4)" : "#F4F4F4"}`,
+      }}
+    >
       <Navbar />
       <CreateToDoForm
         onSubmit={handleCreateToDo}

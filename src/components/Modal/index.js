@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "../../hooks/useForm";
+import "./style.scss";
 
 const Modal = (props) => {
   const [modalInfo] = useState(props.modalInfo);
@@ -12,9 +13,7 @@ const Modal = (props) => {
   });
 
   //change to do or do nothing
-  function handleChangeTodo(e) {
-    e.preventDefault();
-
+  function handleChangeTodo() {
     const editedTodo = {
       title: form.title,
       todo: form.todo,
@@ -23,14 +22,16 @@ const Modal = (props) => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleChangeTodo}>
+    <div className="c_modal">
+      <h2> Edit to do </h2>
+      <main>
         <section>
           <input
             value={form.title}
             onChange={onChangeInput}
             name={"title"}
             type="text"
+            maxLength="35"
           />
           <select value={form.select} onChange={onChangeInput}>
             <option value="backlog" name="backlog">
@@ -44,18 +45,24 @@ const Modal = (props) => {
             </option>
           </select>
         </section>
-        <input
+        <textarea
           value={form.todo}
           onChange={onChangeInput}
           name="todo"
           type="text"
+          maxLength="70"
         />
-        <section>
-          <button type="submit">Save</button>
-          <button onClick={props.delete}>Delete</button>
-          <button onClick={props.cancel}> Cancel </button>
+        <section className="s_buttons">
+          <button onClick={handleChangeTodo}>Save</button>
+          <button onClick={props.delete} style={{ backgroundColor: "red" }}>
+            Delete
+          </button>
+          <button onClick={props.cancel} style={{ backgroundColor: "#F2A447" }}>
+            {" "}
+            Cancel{" "}
+          </button>
         </section>
-      </form>
+      </main>
     </div>
   );
 };
