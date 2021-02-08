@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/logo/logo-totvs-rs.png";
 import "../style.scss";
 //hook
@@ -8,12 +8,10 @@ import { NavLink, useHistory } from "react-router-dom";
 //uuid
 import { v4 as uuid_v4 } from "uuid";
 //context
-import { UserSessionContext } from "../../../context/userSessionContext";
 //alert
 import Swal from "sweetalert2";
 
 const Signup = () => {
-  const { setUserSession } = useContext(UserSessionContext);
   const history = useHistory();
   const [users] = useState(() => {
     const usersInLocalStorage = localStorage.getItem("users");
@@ -59,7 +57,7 @@ const Signup = () => {
         },
       });
     } else {
-      setUserSession(true);
+      localStorage.setItem("session", JSON.stringify(true));
       localStorage.setItem("users", JSON.stringify([...users, newUser]));
       return history.push(`/home/${newUser.id}`);
     }
@@ -104,9 +102,9 @@ const Signup = () => {
 
         <button type="submit"> Signup </button>
         <h3>
-          or login
+          or login{" "}
           <NavLink to="/">
-            <span> here</span>
+            <span>here</span>
           </NavLink>
         </h3>
       </form>

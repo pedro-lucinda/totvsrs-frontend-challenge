@@ -76,7 +76,7 @@ const Modal = (props) => {
           <button onClick={props.delete} style={{ backgroundColor: "red" }}>
             Delete
           </button>
-          <button onClick={props.cancel} style={{ backgroundColor: "#F2A447" }}>
+          <button onClick={props.cancel} style={{ backgroundColor: "#979797" }}>
             Cancel
           </button>
         </section>

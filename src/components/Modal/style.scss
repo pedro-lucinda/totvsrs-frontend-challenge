@@ -55,6 +55,12 @@
 
     button {
       margin: 0 1rem;
+
+      &:hover {
+        background: base.$green;
+        transform: scale(0.96, 0.96);
+        transition: transform ease-in 0.2s;
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import logo from "../../../assets/logo/logo-totvs-rs.png";
 import "../style.scss";
 //hook
@@ -6,12 +6,10 @@ import { useForm } from "../../../hooks/useForm";
 //router
 import { NavLink, useHistory } from "react-router-dom";
 //context
-import { UserSessionContext } from "../../../context/userSessionContext";
 //alert
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const { setUserSession } = useContext(UserSessionContext);
   const [users] = useState(() => {
     const usersInLocalStorage = localStorage.getItem("users");
     if (usersInLocalStorage) {
@@ -37,16 +35,15 @@ const Login = () => {
     const isRegistered = users?.filter(
       (user) => user.email === email && user.password === password
     );
-
-    if (isRegistered.length > 0) {
-      setUserSession(true);
+    if (isRegistered[0]) {
+      localStorage.setItem("session", JSON.stringify(true))
       return history.push(`/home/${isRegistered[0].id}`);
     } else {
       Swal.fire({
         icon: "error",
-        title: "Email not found.",
+        title: "Email or password are invalid.",
         showConfirmButton: false,
-        timer: 1200,
+        timer: 1500,
         customClass: {
           popup: "p_swal",
           title: "h_swal",
@@ -84,9 +81,9 @@ const Login = () => {
 
         <button type="submit"> login </button>
         <h3>
-          or sigup
+          or sigup{" "}
           <NavLink to="/signup">
-            <span> here</span>
+            <span>here</span>
           </NavLink>
         </h3>
       </form>

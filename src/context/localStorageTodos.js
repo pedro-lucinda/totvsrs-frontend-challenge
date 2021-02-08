@@ -6,9 +6,10 @@ export const LSTodosContextProvider = (props) => {
   const [localStorageTodos, setLocalStorageTodos] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify([]));
     const todos = JSON.parse(localStorage.getItem("todos"));
-    setLocalStorageTodos(todos);
+    if (todos.length > 0) {
+      return setLocalStorageTodos(todos);
+    }
   }, []);
 
   return (

@@ -16,12 +16,10 @@ import { v4 as uuid_v4 } from "uuid";
 //context
 import { TodosContext } from "../../context/todosContext";
 import { LSTodosContext } from "../../context/localStorageTodos";
-import { UserSessionContext } from "../../context/userSessionContext";
 
 const Home = () => {
   const { userId } = useParams();
   const history = useHistory();
-  const { userSession } = useContext(UserSessionContext);
   const { todos, setTodos } = useContext(TodosContext);
   const { localStorageTodos } = useContext(LSTodosContext);
   const [select, setSelect] = useState("backlog");
@@ -37,6 +35,7 @@ const Home = () => {
 
   //verification if the user is logged in
   useEffect(() => {
+    const userSession = JSON.parse(localStorage.getItem("session"));
     if (!userSession) {
       Swal.fire({
         icon: "error",
@@ -52,7 +51,7 @@ const Home = () => {
       });
       return history.push("/");
     }
-  }, [userSession, userId]);
+  }, [userId]);
 
   //get all to dos
   useEffect(() => {
